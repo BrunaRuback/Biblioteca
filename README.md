@@ -8,5 +8,6 @@ COMANDOS GIT:
 - git commit -m "mensagem": commita as alteraçoes;
 - git log;
 - git status;
+- git merge [nome-da-branch]
 
 Como fazer commit: https://www.conventionalcommits.org/en/v1.0.0/
