@@ -6,5 +6,7 @@ COMANDOS GIT:
 - git add [caminho]: adiciona os arquivos na árvore de alterações;
     - Ex: git add .
 - git commit -m "mensagem": commita as alteraçoes;
+- git log;
+- git status;
 
 Como fazer commit: https://www.conventionalcommits.org/en/v1.0.0/
