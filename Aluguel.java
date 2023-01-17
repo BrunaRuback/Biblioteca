@@ -45,4 +45,12 @@ public class Aluguel {
         this.dataRetorno = dataRetorno;
     }
 
+    @Override
+    public String toString() {
+        return  "Livro alugado: " + livro +
+                " , cliente que alugou: " + cliente +
+                " , data de emprestimo: " + dataEmprestimo +
+                " , data de retorno: " + dataRetorno;
+    }
+
 }

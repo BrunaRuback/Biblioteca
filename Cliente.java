@@ -14,6 +14,38 @@ public class Cliente {
         this.historico3Ultimos = new ArrayList<>();
     }
 
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public ArrayList<Aluguel> getAlugueisAtivos() {
+        return alugueisAtivos;
+    }
+
+    public void setAlugueisAtivos(ArrayList<Aluguel> alugueisAtivos) {
+        this.alugueisAtivos = alugueisAtivos;
+    }
+
+    public ArrayList<Aluguel> getHistorico3Ultimos() {
+        return historico3Ultimos;
+    }
+
+    public void setHistorico3Ultimos(ArrayList<Aluguel> historico3Ultimos) {
+        this.historico3Ultimos = historico3Ultimos;
+    }
+
     // ---------- TODO: PROVAVELMENTE ESSAS DUAS FUNÇÕES NO DOJO? ---------- //
     private ArrayList<Aluguel> tresUltimos() {
         if (alugueisAtivos.size() < 3)
@@ -63,4 +95,10 @@ public class Cliente {
     public int hashCode() {
         return Objects.hash(cpf);
     }
+
+    @Override
+    public String toString() {
+        return "Nome: " + nome + " , cpf: " + cpf + "\n";
+    }
+    
 }
