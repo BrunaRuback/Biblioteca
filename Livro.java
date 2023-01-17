@@ -1,48 +1,21 @@
-import java.util.Date;
+import java.util.*;
 
-public class Livro 
-{
-    private String titulo;
-    private String editora;
-    private String autor;
-    private Date dataPublicaçao;
+public class Livro {
     
-    public Livro(String titulo, String editora, String autor, Date dataPublicaçao) {
-        this.titulo = titulo;
-        this.editora = editora;
+    private String autor;
+    private String editora;
+    private String titulo;
+    private Date dataPublicacao;
+
+    public Livro(String autor, String editora, String titulo, Date dataPublicacao) {
         this.autor = autor;
-        this.dataPublicaçao = dataPublicaçao;
-    }
-
-    public String getTitulo() {
-        return titulo;
-    }
-
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
-    }
-
-    public String getEditora() {
-        return editora;
-    }
-
-    public void setEditora(String editora) {
         this.editora = editora;
+        this.titulo = titulo;
+        this.dataPublicacao = dataPublicacao;
     }
 
-    public String getAutor() {
-        return autor;
-    }
-
-    public void setAutor(String autor) {
-        this.autor = autor;
-    }
-
-    public Date getDataPublicaçao() {
-        return dataPublicaçao;
-    }
-
-    public void setDataPublicaçao(Date dataPublicaçao) {
-        this.dataPublicaçao = dataPublicaçao;
+    public boolean isAtivo(){
+        return true;
     }
 }
+
