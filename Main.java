@@ -9,8 +9,7 @@ public class Main
     {
         Scanner scanner = new Scanner(System.in);
         Biblioteca biblioteca = new Biblioteca();
-        Livro livro = new Livro(null, null, null, null);
-
+        
         while(true){
 
             System.out.println("----- Menu da Biblioteca -----");
@@ -47,57 +46,77 @@ public class Main
                     String autor = scanner.nextLine();
                     System.out.println("Digita editora do livro: ");
                     String editora = scanner.nextLine();
-                    System.out.println("Digite o autor do livro: ");
-                    String dataPublicacao = scanner.nextLine();
+                    System.out.println("Digite a data de publicacao do livro: ");
+                    Date dataPublicacao;
 
-                    livro = new Livro(autor, editora, titulo, null);
+                    Livro livro = new Livro(autor, editora, titulo, null, true);
+                    biblioteca.adicionaLivro(livro);
                     break;
-                case 3: // remover cliente ---- COM PROBLEMA ----
-                    System.out.println("Digite o cpf do cliente que deseja remover: ");
-                    String cpfEscolhido = scanner.nextLine();
+                case 3: // remover cliente
+                        System.out.println("Digite o cpf do cliente que deseja remover: ");
+                        String cpfEscolhido = scanner.nextLine();
 
-                    for(Cliente cliente: biblioteca.getClientes())
-                    {
-                        if(cpfEscolhido == cliente.getCpf()) 
-                        {
-                            biblioteca.removeCliente(cliente);
-                            System.out.printf("Cliente foi removido com sucesso!");
-                        } 
-                        else
-                        {
-                            System.out.printf("Cliente não pode ser removido");
+                        Cliente clienteRemovido = biblioteca.getClientePorCpf(cpfEscolhido);
+                        biblioteca.removeCliente(clienteRemovido);
+
+                        if (clienteRemovido != null) {
+                        System.out.println("Cliente removido com sucesso!");
+                        } else {
+                        System.out.println("Cliente não encontrado");
                         }
+                        break;
+                case 4: //remover livro
+                    System.out.println("Digite o título do livro: ");
+                    String tituloLivro = scanner.nextLine();
+
+                    Livro livroRemovido = biblioteca.getLivroPorTitulo(tituloLivro);
+                    biblioteca.removeLivro(livroRemovido);
+
+                    if (livroRemovido == null) {
+                        System.out.println("Livro removido com sucesso!");
+                    } else {
+                        System.out.println("Livro não encontrado");
                     }
                     break;
-                case 4: //remover livro
-                System.out.println("Digite o titulo do livro: ");
-                titulo = scanner.nextLine();
+                case 5: //fazer aluguel
+                System.out.println("Digite o título do livro: ");
+                tituloLivro = scanner.nextLine();
+                System.out.println("Digite o cpf do cliente que deseja alugar o livro: ");
+                String cpfAluguel = scanner.nextLine();
 
-                for(Livro livros: biblioteca.getLivros())
-                {
-                    if (titulo == livro.getTitulo())
-                    {
-                    biblioteca.removeLivro(livro);
-                    System.out.printf("Livro foi removido com sucesso!");
+                Livro livroAluguel = biblioteca.getLivroPorTitulo(tituloLivro);
+                Cliente clienteAluguel = biblioteca.getClientePorCpf(cpfAluguel);
+
+                if (livroAluguel != null && clienteAluguel != null) {
+                    if (livroAluguel.isDisponivel()) {
+                        Aluguel aluguel = new Aluguel(livroAluguel, clienteAluguel, null);
+                        biblioteca.adicionaAluguel(aluguel);
+                        livroAluguel.setDisponivel(false);
+                        System.out.println("Aluguel realizado com sucesso!");
+                    } else {
+                        System.out.println("Livro não está disponível para aluguel");
                     }
-                    else{
-                        System.out.printf("Livro nao pode ser removido.");
-                    }
+                } else {
+                    System.out.println("Cliente ou livro não encontrado");
                 }
                     break;
-                case 5: //fazer aluguel ---- COM PROBLEMA ----
-                    System.out.println("Digite o titulo do livro: ");
-                    String tituloLivro = scanner.nextLine();
-                    System.out.println("Digite o cpf do cliente que deseja alugar o livro: ");
-                    String cpfAluguel = scanner.nextLine();
-                    System.out.println("Digite a data de inicio do aluguel: ");
-                    String dataE = scanner.nextLine();
-                    DateFormat dataEmp = new SimpleDateFormat();
-                    //Date dataEmprestimo = dataEmp.parse(dataE);
-                    System.out.println("Digite a data de fim do aluguel: ");
-                    //biblioteca.fazAluguel(null, cliente, null, null);
-                    break;
-                case 6: // devolver livro ---- TIRAR DA LISTA DE 3 ULTIMOS ----
+                case 6: // devolver livro
+                    System.out.println("Digite o título do livro: ");
+                    tituloLivro = scanner.nextLine();
+
+                    livroAluguel = biblioteca.getLivroPorTitulo(tituloLivro);
+
+                    if (livroAluguel != null) {
+                        if (!livroAluguel.isDisponivel()) {
+                            Aluguel aluguelDevolucao = biblioteca.getAluguelPorLivro(livroAluguel);
+                            biblioteca.removeAluguel(aluguelDevolucao);
+                            livroAluguel.setDisponivel(true);
+                            System.out.println("Devolução realizada com sucesso!");
+                        }
+                    } 
+                    else {
+                        System.out.println("Livro já está disponível para aluguel");
+                    }
                     break;
                 case 7: // listar clientes
                     biblioteca.listarClientes();
@@ -110,6 +129,8 @@ public class Main
                     break;
                 case 0: // sair
                     return;
+                default:
+                    System.out.println("Opção inválida");
             }
         }
     }

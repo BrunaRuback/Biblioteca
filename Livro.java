@@ -6,12 +6,14 @@ public class Livro {
     private String editora;
     private String titulo;
     private Date dataPublicacao;
+    private boolean disponivel;
 
-    public Livro(String autor, String editora, String titulo, Date dataPublicacao) {
+    public Livro(String autor, String editora, String titulo, Date dataPublicacao, boolean disponivel) {
         this.autor = autor;
         this.editora = editora;
         this.titulo = titulo;
         this.dataPublicacao = dataPublicacao;
+        this.disponivel = disponivel;
     }
     
     public String getAutor() {
@@ -48,6 +50,14 @@ public class Livro {
     
     public boolean isAtivo(){
         return true;
+    }
+
+    public boolean isDisponivel() {
+        return disponivel;
+    }
+    
+    public void setDisponivel(boolean disponivel) {
+        this.disponivel = disponivel;
     }
 
     @Override

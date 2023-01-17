@@ -58,8 +58,51 @@ public class Biblioteca {
         return false;
     }
 
-    public boolean fazAluguel(Livro livro, Cliente cliente, Date inicio, Date retorno){
+    public boolean adicionaLivro(Livro livro){
+        if(livros.contains(livro))
+            return false;
+        livros.add(livro);
         return true;
+    }
+
+    public boolean fazAluguel(Livro livro, Cliente cliente, Date inicio, Date retorno, boolean disponivel){
+        disponivel = false;
+        return true;
+    }
+
+    public void adicionaAluguel(Aluguel aluguel) {
+        alugueis.add(aluguel);
+    }
+
+    public void removeAluguel(Aluguel aluguel) {
+        alugueis.remove(aluguel);
+    }
+
+    public Cliente getClientePorCpf(String cpf) {
+        for (Cliente cliente : clientes) {
+            if (cliente.getCpf().equals(cpf)) {
+                return cliente;
+            }
+        }
+        return null;
+    }
+
+    public Livro getLivroPorTitulo(String titulo) {
+        for (Livro livro : livros) {
+            if (livro.getTitulo().equals(titulo)) {
+                return livro;
+            }
+        }
+        return null;
+    }
+
+    public Aluguel getAluguelPorLivro(Livro livro) {
+        for (Aluguel aluguel : alugueis) {
+            if (aluguel.getLivro().equals(livro)) {
+                return aluguel;
+            }
+        }
+        return null;
     }
 
     public void listarClientes(){
