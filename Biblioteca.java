@@ -5,7 +5,7 @@ public class Biblioteca {
     private ArrayList<Livro> livros;
     private ArrayList<Aluguel> alugueis;
 
-    public Biblioteca(){
+    public Biblioteca() {
         this.livros = new ArrayList<>();
         this.clientes = new ArrayList<>();
         this.alugueis = new ArrayList<>();
@@ -35,14 +35,14 @@ public class Biblioteca {
         this.alugueis = alugueis;
     }
 
-    public boolean adiconaCliente(Cliente cliente){
-        if(clientes.contains(cliente))
+    public boolean adiconaCliente(Cliente cliente) {
+        if (clientes.contains(cliente))
             return false;
         clientes.add(cliente);
         return true;
     }
 
-    public boolean removeCliente(Cliente cliente){
+    public boolean removeCliente(Cliente cliente) {
         if (clientes.contains(cliente) && !cliente.estaAtivo()) {
             clientes.remove(cliente);
             return true;
@@ -50,82 +50,77 @@ public class Biblioteca {
         return false;
     }
 
-    public boolean removeLivro(Livro livro){
-        if (livros.contains(livro) && !livro.isAtivo()) {
+    public boolean adicionaLivro(Livro livro) {
+        if (livros.contains(livro))
+            return false;
+        livros.add(livro);
+        return true;
+    }
+
+    public boolean removeLivro(Livro livro) {
+        if (livros.contains(livro) && !livro.isAlugado()) {
             livros.remove(livro);
             return true;
         }
         return false;
     }
 
-    public boolean adicionaLivro(Livro livro){
-        if(livros.contains(livro))
-            return false;
-        livros.add(livro);
-        return true;
+    public boolean fazAluguel(Livro livro, Cliente cliente) {
+        // verificar se o livro existe
+        // verificar se o livro não está alugado
+        // verificar se o cliente pode alugar mais um
+        // verificar se o cliente não pegou eles (3 ultimos)
+        if (!livro.isAlugado() &&
+                cliente.verificaSeLimiteDeAlugueisEstaRespeitado() &&
+                !cliente.estaTresUltimosAlugados(livro)) {
+            Date hoje = new Date();
+            Date dataHojeSemHora = new Date(hoje.getDate(), hoje.getMonth(), hoje.getYear());
+
+            Aluguel aluguel = new Aluguel(livro, cliente, hoje);
+
+            // setar livro como alugado
+            livro.isAlugado();
+            // adcioinar aluguel nos ativos
+            cliente.adicionarAluguel(aluguel);
+            // adcionar no historico
+            cliente.adicionarHistorico(aluguel);
+            // adcionar na lista de alugueis de biblioteca
+            alugueis.add(aluguel);
+
+            return true;
+        }
+        return false;
     }
 
-    public boolean fazAluguel(Livro livro, Cliente cliente, Date inicio, Date retorno, boolean disponivel){
-        disponivel = false;
-        return true;
-    }
-
-    public void adicionaAluguel(Aluguel aluguel) {
-        alugueis.add(aluguel);
-    }
-
-    public void removeAluguel(Aluguel aluguel) {
-        alugueis.remove(aluguel);
-    }
-
-    public Cliente getClientePorCpf(String cpf) {
-        for (Cliente cliente : clientes) {
-            if (cliente.getCpf().equals(cpf)) {
-                return cliente;
+    public void desfazerAluguel(Aluguel aluguel, Cliente cliente) {
+        if (aluguel.estaAtivo()) {
+            if (getAlugueis().contains(aluguel)){
+            cliente.removerAluguel(aluguel);
+            cliente.removerHistorico(aluguel);
+            alugueis.remove(aluguel);
             }
         }
-        return null;
     }
 
-    public Livro getLivroPorTitulo(String titulo) {
-        for (Livro livro : livros) {
-            if (livro.getTitulo().equals(titulo)) {
-                return livro;
-            }
-        }
-        return null;
-    }
-
-    public Aluguel getAluguelPorLivro(Livro livro) {
-        for (Aluguel aluguel : alugueis) {
-            if (aluguel.getLivro().equals(livro)) {
-                return aluguel;
-            }
-        }
-        return null;
-    }
-
-    public void listarClientes(){
+    public void listarClientes() {
         System.out.printf("\n----- Lista de clientes ----- \n");
-        for(Cliente cliente : getClientes())
-        {
+        for (Cliente cliente : getClientes()) {
             System.out.print(cliente);
         }
     }
 
-    public void listarAlugueis(){
+    public void listarAlugueis() {
         System.out.printf("Lista de alugueis: ");
-        for(Aluguel aluguel : getAlugueis())
-        {
+        for (Aluguel aluguel : getAlugueis()) {
             System.out.print(aluguel);
         }
     }
 
-    public void listarLivros(){
+    public void listarLivros() {
         System.out.printf("Lista de livros: ");
-        for(Livro livro : getLivros())
-        {
+        for (Livro livro : getLivros()) {
             System.out.print(livro);
         }
     }
+
 }
