@@ -56,7 +56,7 @@ public class Main {
                     String cpfEscolhido = scanner.nextLine();
 
                     Cliente clienteRemovido = new Cliente("a", cpfEscolhido);
-                    biblioteca.removeCliente(clienteRemovido, cpfEscolhido);
+                    biblioteca.removeCliente(clienteRemovido);
 
                     if (clienteRemovido != null)
                         System.out.println("Cliente removido!");
@@ -70,7 +70,7 @@ public class Main {
                     String tituloLivro = scanner.nextLine();
 
                     Livro livroRemovido = new Livro("autor", "editora", tituloLivro, null, 0);
-                    biblioteca.removeLivro(livroRemovido, tituloLivro);
+                    biblioteca.removeLivro(livroRemovido);
 
                     if (livroRemovido != null)
                         System.out.println("Livro removido!");
