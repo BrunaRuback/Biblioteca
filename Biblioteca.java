@@ -35,16 +35,16 @@ public class Biblioteca {
         this.alugueis = alugueis;
     }
 
-    public boolean adiconaCliente(Cliente cliente) {
+   public boolean adiconaCliente(Cliente cliente) {
         if (clientes.contains(cliente))
             return false;
         clientes.add(cliente);
         return true;
     }
 
-    public boolean removeCliente(Cliente cliente, String cpf) {
+    public boolean removeCliente(Cliente cliente) {
         for(Cliente clienteRemovido: this.clientes){
-                if(cliente.getCpf() == cpf){
+                if(cliente.getCpf().equals(clienteRemovido.getCpf())){
                     clientes.remove(clienteRemovido);
                     return true;
                 }  
@@ -59,9 +59,9 @@ public class Biblioteca {
         return true;
     }
 
-    public boolean removeLivro(Livro livro, String titulo) {
+    public boolean removeLivro(Livro livro) {
         for(Livro livroRemovido: this.livros){
-            if(livro.getTitulo() == titulo){
+            if(livro.getTitulo().equals(livroRemovido.getTitulo())){
                 livros.remove(livroRemovido);
                 return true;
             }  
