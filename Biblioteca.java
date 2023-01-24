@@ -42,11 +42,13 @@ public class Biblioteca {
         return true;
     }
 
-    public boolean removeCliente(Cliente cliente) {
-        if (clientes.contains(cliente) && !cliente.estaAtivo()) {
-            clientes.remove(cliente);
-            return true;
-        }
+    public boolean removeCliente(Cliente cliente, String cpf) {
+        for(Cliente clienteRemovido: this.clientes){
+                if(cliente.getCpf() == cpf){
+                    clientes.remove(clienteRemovido);
+                    return true;
+                }  
+            }
         return false;
     }
 
@@ -57,10 +59,12 @@ public class Biblioteca {
         return true;
     }
 
-    public boolean removeLivro(Livro livro) {
-        if (livros.contains(livro) && !livro.isAlugado()) {
-            livros.remove(livro);
-            return true;
+    public boolean removeLivro(Livro livro, String titulo) {
+        for(Livro livroRemovido: this.livros){
+            if(livro.getTitulo() == titulo){
+                livros.remove(livroRemovido);
+                return true;
+            }  
         }
         return false;
     }
@@ -92,14 +96,16 @@ public class Biblioteca {
         return false;
     }
 
-    public void desfazerAluguel(Aluguel aluguel, Cliente cliente) {
-        if (aluguel.estaAtivo()) {
-            if (getAlugueis().contains(aluguel)){
-            cliente.removerAluguel(aluguel);
-            cliente.removerHistorico(aluguel);
-            alugueis.remove(aluguel);
-            }
+    public boolean desfazerAluguel(Aluguel aluguel, Cliente cliente) {
+        for(Aluguel aluguelRemovido: this.alugueis){
+            if(aluguel.estaAtivo() && cliente.estaAtivo()){
+                cliente.removerAluguel(aluguelRemovido);
+                cliente.removerHistorico(aluguelRemovido);
+                alugueis.remove(aluguelRemovido);
+                return true;
+            }  
         }
+        return false;
     }
 
     public void listarClientes() {
@@ -110,14 +116,14 @@ public class Biblioteca {
     }
 
     public void listarAlugueis() {
-        System.out.printf("Lista de alugueis: ");
+        System.out.printf("\n----- Lista de alugueis: -----\n");
         for (Aluguel aluguel : getAlugueis()) {
             System.out.print(aluguel);
         }
     }
 
     public void listarLivros() {
-        System.out.printf("Lista de livros: ");
+        System.out.printf("\n----- Lista de livros: -----\n");
         for (Livro livro : getLivros()) {
             System.out.print(livro);
         }

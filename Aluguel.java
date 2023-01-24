@@ -6,7 +6,6 @@ public class Aluguel {
     private Date dataEmprestimo;
     private Date dataRetorno;
 
-
     public Aluguel(Livro livro, Cliente cliente, Date dataEmprestimo) {
         this.livro = livro;
         this.cliente = cliente;
@@ -14,7 +13,7 @@ public class Aluguel {
         this.dataRetorno = null;
     }
 
-    public boolean estaAtivo(){
+    public boolean estaAtivo() {
         return dataRetorno == null;
     }
 
@@ -24,10 +23,10 @@ public class Aluguel {
 
     @Override
     public String toString() {
-        return  "Livro alugado" + livro + "\n" +
+        return "Livro alugado" + livro + "\n" +
                 "Cliente: " + cliente + "\n" +
                 "Data de emprestimo" + dataEmprestimo + "\n" +
                 "Data de retorno" + dataRetorno + "\n" +
-                "-------";
+                "-------" + "\n";
     }
 }

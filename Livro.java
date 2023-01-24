@@ -16,6 +16,54 @@ public class Livro {
         this.codigo = codigo;
     }
 
+    public String getAutor() {
+        return autor;
+    }
+
+    public void setAutor(String autor) {
+        this.autor = autor;
+    }
+
+    public String getEditora() {
+        return editora;
+    }
+
+    public void setEditora(String editora) {
+        this.editora = editora;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public Date getDataPublicacao() {
+        return dataPublicacao;
+    }
+
+    public void setDataPublicacao(Date dataPublicacao) {
+        this.dataPublicacao = dataPublicacao;
+    }
+
+    public int getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
+    }
+
+    public ArrayList<Aluguel> getAlugueis() {
+        return alugueis;
+    }
+
+    public void setAlugueis(ArrayList<Aluguel> alugueis) {
+        this.alugueis = alugueis;
+    }
+
     public boolean isAlugado() {
         if (this.alugueis.size() == 0)
             return false;
@@ -44,6 +92,6 @@ public class Livro {
                 "Titulo: " + titulo + "\n" +
                 "Data de publicacao" + dataPublicacao + "\n" +
                 "Codigo: " + codigo + "\n" +
-                "-------";
+                "-------" + "\n";
     }
 }

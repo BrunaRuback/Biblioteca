@@ -1,6 +1,6 @@
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Scanner;
 import java.util.Scanner;
 
 public class Main {
@@ -20,6 +20,7 @@ public class Main {
             System.out.println("7. Listar clientes");
             System.out.println("8. Listar livros");
             System.out.println("9. Listar alugueis");
+            System.out.println("10. Emitir relatorio de alugueis");
             System.out.println("0. Sair");
             System.out.print("Selecione uma opção: ");
 
@@ -36,23 +37,18 @@ public class Main {
                     Cliente novoCliente = new Cliente(nome, cpf);
                     biblioteca.adiconaCliente(novoCliente);
                     break;
-                case 2: // cadastrar livro ---- COM PROBLEMA ----
-                    
+                case 2: // cadastrar livro
+
                     System.out.println("Digite o autor do livro: ");
                     String autor = scanner.nextLine();
                     System.out.println("Digita editora do livro: ");
                     String editora = scanner.nextLine();
                     System.out.println("Digite o titulo do livro: ");
                     String titulo = scanner.nextLine();
-                    System.out.println("Digite a data de publicacao do livro: ");
-                    String dataPublicacao = scanner.nextLine();
-                    SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-                    Date data = null;
-                    data = formato.parse(dataPublicacao);
-                    //Date hoje = dataPublicacao;
-                    System.out.println("Digita editora do livro: ");
+                    System.out.println("Digita o codigo do livro: ");
                     int codigo = scanner.nextInt();
-                    Livro livro = new Livro(autor, editora, titulo, data, codigo);
+
+                    Livro livro = new Livro(autor, editora, titulo, null, codigo);
                     biblioteca.adicionaLivro(livro);
                     break;
                 case 3: // remover cliente
@@ -60,16 +56,28 @@ public class Main {
                     String cpfEscolhido = scanner.nextLine();
 
                     Cliente clienteRemovido = new Cliente("a", cpfEscolhido);
-                    biblioteca.removeCliente(clienteRemovido);
+                    biblioteca.removeCliente(clienteRemovido, cpfEscolhido);
 
+                    if (clienteRemovido != null)
+                        System.out.println("Cliente removido!");
+                    else 
+                    {
+                        System.out.println("Cliente nao pode ser removido!");
+                    }
                     break;
                 case 4: // remover livro
                     System.out.println("Digite o título do livro: ");
                     String tituloLivro = scanner.nextLine();
 
                     Livro livroRemovido = new Livro("autor", "editora", tituloLivro, null, 0);
-                    biblioteca.removeLivro(livroRemovido);
+                    biblioteca.removeLivro(livroRemovido, tituloLivro);
 
+                    if (livroRemovido != null)
+                        System.out.println("Livro removido!");
+                    else 
+                    {
+                        System.out.println("Livro nao pode ser removido!");
+                    }
                     break;
                 case 5: // fazer aluguel
                     System.out.println("Digite o título do livro: ");
@@ -77,6 +85,10 @@ public class Main {
                     System.out.println("Digite o cpf do cliente que deseja alugar o livro: ");
                     String cpfAluguel = scanner.nextLine();
 
+                    Livro livroAlugado = new Livro("a", "a", tituloLivro, null, '0');
+                    Cliente clienteAluguel = new Cliente("nome", cpfAluguel);
+                    
+                    biblioteca.fazAluguel(livroAlugado, clienteAluguel);
                     break;
                 case 6: // devolver livro
                     System.out.println("Digite o CPF do cliente: ");
@@ -84,10 +96,11 @@ public class Main {
                     System.out.println("Digite o título do livro: ");
                     String tituloRemover = scanner.nextLine();
 
-                    Cliente cliente = new Cliente("a", cpfCliente);
                     Livro livroDevolver = new Livro("autor", "editora", tituloRemover, null, 0);
-                    biblioteca.desfazerAluguel(livroDevolver, clienteRemovido);
-                   
+                    Cliente cliente = new Cliente("a", cpfCliente);
+                    Aluguel aluguelDesfazer = new Aluguel(livroDevolver, cliente, null);
+                    
+                    biblioteca.desfazerAluguel(aluguelDesfazer, cliente);
                     break;
                 case 7: // listar clientes
                     biblioteca.listarClientes();
@@ -97,6 +110,19 @@ public class Main {
                     break;
                 case 9: // listar alugueis
                     biblioteca.listarAlugueis();
+                    break;
+                case 10: // relatorio de alugueis
+                    System.out.println("Filtrar relatorio por: \n a- Data \n b- Livro \n c- Cliente");
+                    String escolha = scanner.nextLine();
+
+                    switch (escolha) {
+                        case "a":
+                            break;
+                        case "b":
+                            break;
+                        case "c":
+                            break;
+                    }
                     break;
                 case 0: // sair
                     return;
