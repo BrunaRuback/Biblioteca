@@ -1,3 +1,4 @@
+/*
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -131,4 +132,16 @@ public class Main {
             }
         }
     }
+}
+*/
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Menu menu = new Menu();
+        menu.apresentaMenu();
+    }
+
+
+
 }

@@ -8,6 +8,10 @@ public class Livro {
     private int codigo;
     private ArrayList<Aluguel> alugueis;
 
+    public String getTitulo() {
+        return titulo;
+    }
+
     public Livro(String autor, String editora, String titulo, Date dataPublicacao, int codigo) {
         this.autor = autor;
         this.editora = editora;
@@ -16,58 +20,28 @@ public class Livro {
         this.codigo = codigo;
     }
 
-    public String getAutor() {
-        return autor;
-    }
-
-    public void setAutor(String autor) {
-        this.autor = autor;
-    }
-
-    public String getEditora() {
-        return editora;
-    }
-
-    public void setEditora(String editora) {
-        this.editora = editora;
-    }
-
-    public String getTitulo() {
-        return titulo;
-    }
-
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
-    }
-
-    public Date getDataPublicacao() {
-        return dataPublicacao;
-    }
-
-    public void setDataPublicacao(Date dataPublicacao) {
-        this.dataPublicacao = dataPublicacao;
-    }
-
-    public int getCodigo() {
-        return codigo;
-    }
-
-    public void setCodigo(int codigo) {
-        this.codigo = codigo;
-    }
-
-    public ArrayList<Aluguel> getAlugueis() {
-        return alugueis;
-    }
-
-    public void setAlugueis(ArrayList<Aluguel> alugueis) {
-        this.alugueis = alugueis;
-    }
-
     public boolean isAlugado() {
         if (this.alugueis.size() == 0)
             return false;
         return this.alugueis.get(alugueis.size() - 1).estaAtivo();
+    }
+
+    public boolean adicionaListaAlugueis(Aluguel aluguel){
+        if(!alugueis.contains(aluguel)){
+            alugueis.add(aluguel);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean devolucao(){
+        for (Aluguel aluguel: alugueis) {
+            if (aluguel.estaAtivo()) {
+                //todo criar metodo na classe aluguel para encerrar aluguel
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
@@ -77,7 +51,7 @@ public class Livro {
         if (o == null || getClass() != o.getClass())
             return false;
         Livro livro = (Livro) o;
-        return titulo == livro.titulo;
+        return codigo == livro.codigo;
     }
 
     @Override
