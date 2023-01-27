@@ -3,33 +3,51 @@ import java.util.Objects;
 
 public class Cliente {
     private String nome, cpf;
-    private ArrayList<Aluguel> alugueis;
+    private ArrayList<Aluguel> historicoAlugueis;
+    int qtdAlugueisAtivos;
     
     public Cliente(String nome, String cpf) {
         this.nome = nome;
         this.cpf = cpf;
-        this.alugueis = new ArrayList<>();
+        this.historicoAlugueis = new ArrayList<>();
+        this.qtdAlugueisAtivos = 0;
     }
     
-    public ArrayList<Aluguel> getAlugueis() {
-        return alugueis;
+    public ArrayList<Aluguel> getHistoricoAlugueis() {
+        return historicoAlugueis;
     }
 
-    public boolean estaTresUltimosAlugados(Livro livro){
-        for (int i = alugueis.size() - 1; i >= 0 && i >= alugueis.size() - 4; i --){
-            if (alugueis.get(i).getLivro().equals(livro))
+    public int qtdAlugueisAtivos() {
+        return this.qtdAlugueisAtivos;
+    }
+
+    public void alugar(Aluguel aluguel) {
+        this.qtdAlugueisAtivos++;
+        this.historicoAlugueis.add(aluguel);
+    }
+
+    public void devolver() {
+        this.qtdAlugueisAtivos--;
+    }
+
+    public boolean estaTresUltimosAlugados(Livro livro) {
+        int posicaoDoUltimoLivroAlugado = historicoAlugueis.size() - 1;
+        int posicaoDoAntiPenultimoLivroAlugado = posicaoDoUltimoLivroAlugado - 2;
+
+        for (int i = posicaoDoUltimoLivroAlugado; i >= 0 && i >= posicaoDoAntiPenultimoLivroAlugado; i --){
+            if (historicoAlugueis.get(i).getLivro().equals(livro))
                 return true;
         }
         return false;
     }
 
-    private int qtdAlugueisAtivos(){
-        int qtd = 0;
-        for (Aluguel a : alugueis)
-            if (a.estaAtivo())
-                qtd ++;
-        return qtd;
-    }
+    // private int qtdAlugueisAtivos(){
+    //     int qtd = 0;
+    //     for (Aluguel a : alugueis)
+    //         if (a.estaAtivo())
+    //             qtd ++;
+    //     return qtd;
+    // }
 
     public boolean temAlugueisAtivos() {
         return qtdAlugueisAtivos() != 0;
@@ -39,17 +57,7 @@ public class Cliente {
         return qtdAlugueisAtivos() < 2;
     }
 
-//    public boolean estaAtivo (){
-//        for (Aluguel a : alugueis)
-//            if (a.estaAtivo())
-//                return true;
-//        return false;
-//    }
-
-    public boolean adicionarAluguelAtivo(Aluguel aluguel){
-        return this.alugueis.add(aluguel);
-    }
-
+  
     public String getCpf() {
         return cpf;
     }
@@ -70,9 +78,7 @@ public class Cliente {
     @Override
     public String toString() {
         return "Nome do cliente: " + nome + "\n" +
-                "CPF: " + cpf + "\n" +
-                "Alugueis ativos: " + alugueis + "\n" +
-                "-------" + "\n";
+                "CPF: " + cpf + "\n";
     }
 
 }

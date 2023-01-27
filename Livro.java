@@ -25,9 +25,20 @@ public class Livro {
         return this.disponibilidade == false;
     }
 
+    public void serAlugado() {
 
-    public boolean devolucao(){
-        return false;
+        // se o livro ja esta em um aluguel, nao pode ser alugado novamente
+        if (this.isAlugado()) return;
+
+        this.disponibilidade = false;
+    }
+
+    public void serDevolvido() {
+
+        // se o livro nao esta em um aluguel, nao pode ser devolvido
+        if (!this.isAlugado()) return;
+
+        this.disponibilidade = true;
     }
 
     @Override

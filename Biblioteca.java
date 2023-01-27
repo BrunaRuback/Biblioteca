@@ -23,7 +23,7 @@ public class Biblioteca {
     }
 
     public boolean removeCliente(Cliente cliente, String cpf){
-        Cliente clienteEscolhido = acharClientePeloCPF(cliente, cpf);
+        Cliente clienteEscolhido = acharClientePeloCPF(cpf);
             if(!clienteEscolhido.temAlugueisAtivos()){
                 clientes.remove(clienteEscolhido);
                 return true;
@@ -47,24 +47,53 @@ public class Biblioteca {
             return false;
     }
 
-    public boolean fazAluguel(Livro livro, Cliente cliente){
-        //verificar se o livro existe
-        //verificar se o livro não está alugado
+    public boolean fazAluguel(String tituloLivro, String cpfCliente){
         //verificar se o cliente pode alugar mais um
-        //verificar se o cliente não pegou eles (3 ultimos)
+        Livro livro = this.acharLivroPeloTitulo(tituloLivro);
+
+        // verifica se o livro existe
+        if (livro == null) {
+            return false;
+        }
+
         if (livro.isAlugado()) return false;
+
+        Cliente cliente = this.acharClientePeloCPF(cpfCliente);
+
+        // verifica se cliente existe
+        if (cliente == null) {
+            return false;
+        }
+
+        if (cliente.estaTresUltimosAlugados(livro)) {
+            return false;
+        }
+
+        if (cliente.qtdAlugueisAtivos == 2) {
+            return false;
+        }
+
+        Aluguel aluguel = new Aluguel(livro, cliente);
+
+        this.alugueis.add(aluguel);
         
-        return false; //todo: remover quando completar o codigo
+        return true; //todo: remover quando completar o codigo
 
     }
 
-    public boolean desfazerAluguel(Aluguel aluguel, Cliente cliente) {
-        for(Aluguel aluguelRemovido: this.alugueis){
-            if(aluguel.estaAtivo() && cliente.temAlugueisAtivos()){
-                cliente.getAlugueis().remove(aluguelRemovido);
-                alugueis.remove(aluguelRemovido);
+    public boolean encerrarAluguel(Livro livro, Cliente cliente) {
+
+
+        for(Aluguel aluguel: this.alugueis){
+
+            Cliente clienteAluguel = aluguel.getCliente();
+            Livro livroAluguel = aluguel.getLivro();
+
+            if (clienteAluguel.equals(cliente) && livroAluguel.equals(livro) && aluguel.estaAtivo()) {
+                aluguel.encerrar();
                 return true;
-            }     
+            } 
+
         }
         return false;
     }
@@ -78,9 +107,9 @@ public class Biblioteca {
         return null;
     }
 
-    public Cliente acharClientePeloCPF(Cliente cliente, String cpf) {
+    public Cliente acharClientePeloCPF(String cpf) {
         for (Cliente clienteEscolhido : this.clientes) {
-            if (cliente.getCpf().equals(clienteEscolhido.getCpf())) {
+            if (cpf.equals(clienteEscolhido.getCpf())) {
                 return clienteEscolhido;
             }
         }

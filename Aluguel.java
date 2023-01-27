@@ -7,25 +7,34 @@ public class Aluguel {
     private Date dataRetorno;
 
 
-    public Aluguel(Livro livro, Cliente cliente, Date dataEmprestimo) {
+    public Aluguel(Livro livro, Cliente cliente) {
         this.livro = livro;
         this.cliente = cliente;
-        this.dataEmprestimo = dataEmprestimo;
+        this.dataEmprestimo = Calendar.getInstance().getTime();
         this.dataRetorno = null;
-        cliente.adicionarAluguelAtivo(this);
+
+        cliente.alugar(this);
+        livro.serAlugado();
     }
     
     public Livro getLivro() {
         return livro;
     }
 
+    public Cliente getCliente() {
+        return cliente;
+    }
+
     public boolean estaAtivo(){
         return dataRetorno == null;
     }
 
-    public void devolver() {
+    public void encerrar() {
         Date dataRetorno = Calendar.getInstance().getTime();
         this.dataRetorno = dataRetorno;
+
+        this.cliente.devolver();
+        this.livro.serDevolvido();
     }
 
     @Override
