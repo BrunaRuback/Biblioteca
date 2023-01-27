@@ -86,8 +86,8 @@ public class Biblioteca {
     }
 
     public Livro acharLivroPeloTitulo(Livro livro, String titulo) {
-        for (Livro livroEscolhido : livros) {
-            if (livro.getTitulo().equals(titulo)) {
+        for (Livro livroEscolhido : this.livros) {
+            if (livro.getTitulo().equals(livroEscolhido.getTitulo())) {
                 return livroEscolhido;
             }
         }
@@ -95,8 +95,8 @@ public class Biblioteca {
     }
 
     public Cliente acharClientePeloCPF(Cliente cliente, String cpf) {
-        for (Cliente clienteEscolhido : clientes) {
-            if (cliente.getCpf().equals(cpf)) {
+        for (Cliente clienteEscolhido : this.clientes) {
+            if (cliente.getCpf().equals(clienteEscolhido.getCpf())) {
                 return clienteEscolhido;
             }
         }

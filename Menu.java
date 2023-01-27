@@ -46,7 +46,7 @@ public class Menu {
                     Livro livroRemovido = removeLivro(titulo);
                     biblioteca.removeLivro(livroRemovido, titulo);
                     break;
-                case 5: // fazer aluguel
+                case 5: //TODO: fazer aluguel
 
                     Aluguel aluguel = fazAluguel();
                     break;
@@ -60,7 +60,17 @@ public class Menu {
                     biblioteca.listarLivros();
                     break;
                 case 9: // TODO: relatorio alugueis 
-                    biblioteca.listarAlugueis();
+                    System.out.println("Filtrar relatorio por: \n a- Data \n b- Livro \n c- Cliente");
+                    String escolha = leString();
+
+                    switch (escolha) {
+                        case "a":
+                            break;
+                        case "b":
+                            break;
+                        case "c":
+                            break;
+                    }
                     break;
                 case 0:
                     break;
