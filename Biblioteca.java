@@ -38,8 +38,8 @@ public class Biblioteca {
         return true;
     }
 
-    public boolean removeLivro(Livro livro, String titulo) {
-        Livro livroRemovido = acharLivroPeloTitulo(livro, titulo);
+    public boolean removeLivro(String titulo) {
+        Livro livroRemovido = acharLivroPeloTitulo(titulo);
             if(livros.contains(livroRemovido)){
                 livros.remove(livroRemovido);
                 return true;
@@ -52,24 +52,8 @@ public class Biblioteca {
         //verificar se o livro não está alugado
         //verificar se o cliente pode alugar mais um
         //verificar se o cliente não pegou eles (3 ultimos)
-        if (!livro.isAlugado() &&
-                cliente.temLimiteParaAlugar() &&
-                !cliente.estaTresUltimosAlugados(livro)){
-            Date hoje = new Date();
-            Date dataHojeSemHora = new Date(hoje.getDate(),hoje.getMonth(),hoje.getYear() );
-
-            Aluguel aluguel = new Aluguel(livro, cliente, hoje);
-
-//            cliente.adicionarAluguelNoHistoricoTresUltimos(aluguel);
-            //todo: adicionar no historico de alugueis do Livro
-            Livro livroAlugado = new Livro(null, null, null, dataHojeSemHora, 0);
-            livroAlugado.adicionaListaAlugueis(aluguel);
-
-            cliente.adicionarAluguelAtivo(aluguel);
-            //todo: adicionar no historico da biblioteca tambem
-            alugueis.add(aluguel);
-        }
-
+        if (livro.isAlugado()) return false;
+        
         return false; //todo: remover quando completar o codigo
 
     }
@@ -85,9 +69,9 @@ public class Biblioteca {
         return false;
     }
 
-    public Livro acharLivroPeloTitulo(Livro livro, String titulo) {
+    public Livro acharLivroPeloTitulo(String titulo) {
         for (Livro livroEscolhido : this.livros) {
-            if (livro.getTitulo().equals(livroEscolhido.getTitulo())) {
+            if (titulo.equals(livroEscolhido.getTitulo())) {
                 return livroEscolhido;
             }
         }

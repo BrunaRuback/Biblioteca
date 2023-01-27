@@ -6,7 +6,7 @@ public class Livro {
     private String titulo;
     private Date dataPublicacao;
     private int codigo;
-    private ArrayList<Aluguel> alugueis;
+    private boolean disponibilidade;
 
     public String getTitulo() {
         return titulo;
@@ -18,29 +18,15 @@ public class Livro {
         this.titulo = titulo;
         this.dataPublicacao = dataPublicacao;
         this.codigo = codigo;
+        this.disponibilidade = true;
     }
 
     public boolean isAlugado() {
-        if (this.alugueis.size() == 0)
-            return false;
-        return this.alugueis.get(alugueis.size() - 1).estaAtivo();
+        return this.disponibilidade == false;
     }
 
-    public boolean adicionaListaAlugueis(Aluguel aluguel){
-        if(!alugueis.contains(aluguel)){
-            alugueis.add(aluguel);
-            return true;
-        }
-        return false;
-    }
 
     public boolean devolucao(){
-        for (Aluguel aluguel: alugueis) {
-            if (aluguel.estaAtivo()) {
-                //todo criar metodo na classe aluguel para encerrar aluguel
-                return true;
-            }
-        }
         return false;
     }
 

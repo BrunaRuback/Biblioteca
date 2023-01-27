@@ -43,8 +43,8 @@ public class Menu {
 
                     System.out.println("Digite o título do livro: ");
                     String titulo = leString();
-                    Livro livroRemovido = removeLivro(titulo);
-                    biblioteca.removeLivro(livroRemovido, titulo);
+
+                    biblioteca.removeLivro(titulo);
                     break;
                 case 5: //TODO: fazer aluguel
 
@@ -114,7 +114,7 @@ public class Menu {
 
     public Livro removeLivro(String titulo) {
         Livro livro = new Livro("autor", "editora", titulo, null, 0);
-        biblioteca.removeLivro(livro, titulo);
+        biblioteca.removeLivro(titulo);
 
         return livro;
     }
@@ -141,7 +141,7 @@ public class Menu {
         System.out.println("Titulo do livro a ser devolvido: ");
         String titulo = leString();
         Livro livro = new Livro("a", "a", titulo, null, 0);
-        livro = biblioteca.acharLivroPeloTitulo(livro, titulo);
+        livro = biblioteca.acharLivroPeloTitulo(titulo);
 
         System.out.println("CPF do cliente que realizou o aluguel: ");
         String cpf = leString();
